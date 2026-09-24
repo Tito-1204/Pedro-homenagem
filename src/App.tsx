@@ -45,10 +45,14 @@ export const App: React.FC = () => {
       >
         <Navbar activeSection={activeSection} />
         <main className="flex-1">
-          {/* Unified container for Hero and EditorialLetter */}
-          <div className="relative">
-            {/* Sticky viewport-sized carousel: stays perfectly proportioned on mobile without 5x zoom */}
-            <div className="sticky top-0 h-screen w-full -mb-[100vh] pointer-events-none overflow-hidden z-0">
+          {/* Unified container for Hero and EditorialLetter — photo fills entire block on desktop */}
+          <div className="relative overflow-hidden">
+            {/* Mobile: sticky so the photo stays viewport-sized and doesn't zoom/distort.
+                Desktop (md+): absolute fill — photo extends through all of Hero + EditorialLetter (3 Pilares included). */}
+            <div className="md:hidden sticky top-0 h-screen w-full -mb-[100vh] pointer-events-none z-0">
+              <BackgroundCarousel />
+            </div>
+            <div className="hidden md:block absolute inset-0 pointer-events-none z-0">
               <BackgroundCarousel />
             </div>
 

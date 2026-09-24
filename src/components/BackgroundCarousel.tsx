@@ -28,19 +28,18 @@ export const BackgroundCarousel: React.FC = () => {
                 : 'opacity-0 -translate-x-6 scale-[1.02]'
             )}
           >
-            <img
-              src={photo.url}
-              alt={photo.alt}
-              className="w-full h-full object-cover"
-              style={{ objectPosition: 'center 10%' }}
-            />
+              <img
+                src={photo.url}
+                alt={photo.alt}
+                className="w-full h-full object-cover object-[center_15%] md:object-top"
+              />
           </div>
         );
       })}
 
-      {/* Layered subtle gradients: maintains text contrast and highlights Pedro beautifully */}
-      <div className="absolute inset-0 bg-slate-950/45" />
-      <div className="absolute inset-0 bg-gradient-to-b from-slate-950/80 via-transparent to-slate-950/75" />
+      {/* Layered gradients — lighter on mobile so Pedro's face shows clearly */}
+      <div className="absolute inset-0 bg-slate-950/20 md:bg-slate-950/40" />
+      <div className="absolute inset-0 bg-gradient-to-b from-slate-950/30 via-transparent to-slate-950/60 md:from-slate-950/70 md:via-transparent md:to-slate-950/75" />
       <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-slate-950 to-transparent" />
     </div>
   );
