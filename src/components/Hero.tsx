@@ -1,5 +1,5 @@
 import React from 'react';
-import { Sparkles, Wrench, Building2 } from 'lucide-react';
+import { Wrench, Building2 } from 'lucide-react';
 
 export const Hero: React.FC = () => {
   return (
@@ -7,13 +7,7 @@ export const Hero: React.FC = () => {
       {/* Foreground content */}
       <div className="relative z-10 max-w-4xl mx-auto w-full text-center flex flex-col items-center px-4 sm:px-6 lg:px-8 pt-28 pb-16">
 
-        {/* Badge superior */}
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-950/80 border border-amber-400/35 text-amber-300 text-xs sm:text-sm font-medium backdrop-blur-md shadow-sm mb-6">
-          <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-          <span>Homenagem ao Irmão Pedro • Equipa Técnica do SALS</span>
-          <span className="w-1.5 h-1.5 rounded-full bg-amber-400/60"></span>
-          <span className="text-slate-300 font-normal">Luanda Sul</span>
-        </div>
+
 
         {/* Título Principal */}
         <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white mb-5 font-serif max-w-3xl leading-[1.2] drop-shadow-md">
