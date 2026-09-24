@@ -19,6 +19,18 @@ export const PhotoGallery: React.FC = () => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [activeModalPhoto, photos]);
 
+  // Lock body scroll when modal is open
+  useEffect(() => {
+    if (activeModalPhoto) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [activeModalPhoto]);
+
   const navigateModal = (direction: number) => {
     if (!activeModalPhoto) return;
     const currentIndex = photos.findIndex(p => p.id === activeModalPhoto.id);
@@ -33,22 +45,17 @@ export const PhotoGallery: React.FC = () => {
       case 0:
         return 'md:col-span-2 md:row-span-2 aspect-[4/3] md:aspect-auto';
       case 1:
-        return 'md:col-span-1 md:row-span-1 aspect-[4/3]';
       case 2:
         return 'md:col-span-1 md:row-span-1 aspect-[4/3]';
       case 3:
         return 'md:col-span-1 md:row-span-2 aspect-[4/3] md:aspect-auto';
-      case 4:
-        return 'md:col-span-1 md:row-span-1 aspect-[4/3]';
-      case 5:
-        return 'md:col-span-1 md:row-span-1 aspect-[4/3]';
       default:
         return 'md:col-span-1 aspect-[4/3]';
     }
   };
 
   return (
-    <section id="galeria" className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto relative">
+    <section id="galeria" className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto relative z-20">
       
       {/* Section Header */}
       <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-12">
@@ -70,7 +77,7 @@ export const PhotoGallery: React.FC = () => {
             <div
               key={photo.id}
               onClick={() => setActiveModalPhoto(photo)}
-              className={`group relative rounded-3xl overflow-hidden bg-slate-900 border border-slate-800/80 hover:border-amber-500/40 transition-all duration-500 hover:shadow-xl cursor-pointer flex flex-col justify-end ${bentoClass}`}
+              className={'group relative rounded-3xl overflow-hidden bg-slate-900 border border-slate-800/80 hover:border-amber-500/40 transition-all duration-500 hover:shadow-xl cursor-pointer flex flex-col justify-end ' + bentoClass}
             >
               {/* Image */}
               <img
@@ -103,20 +110,20 @@ export const PhotoGallery: React.FC = () => {
         })}
       </div>
 
-      {/* Lightbox Modal em Tela Cheia */}
+      {/* Lightbox Modal em Tela Cheia - z-[9999] e perfeitamente ancorado no viewport */}
       {activeModalPhoto && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-slate-950/95 backdrop-blur-2xl animate-in fade-in duration-200"
+          className="fixed inset-0 z-[9999] flex items-center justify-center p-3 sm:p-6 bg-slate-950/90 backdrop-blur-xl overflow-y-auto"
           onClick={() => setActiveModalPhoto(null)}
         >
           <div
-            className="relative max-w-4xl w-full bg-slate-900 border border-amber-500/30 rounded-3xl overflow-hidden shadow-2xl flex flex-col md:flex-row max-h-[92vh]"
+            className="relative max-w-4xl w-full bg-slate-900 border border-amber-500/30 rounded-3xl overflow-hidden shadow-2xl flex flex-col md:flex-row my-auto"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Close Button */}
             <button
               onClick={() => setActiveModalPhoto(null)}
-              className="absolute top-4 right-4 z-30 p-2.5 rounded-full bg-slate-950/90 text-slate-300 hover:text-white hover:bg-slate-800 border border-slate-700 transition-colors"
+              className="absolute top-3 right-3 z-30 p-2.5 rounded-full bg-slate-950/90 text-slate-200 hover:text-white hover:bg-slate-800 border border-slate-700 transition-colors shadow-lg cursor-pointer"
               aria-label="Fechar visualização"
             >
               <X className="w-5 h-5" />
@@ -125,7 +132,7 @@ export const PhotoGallery: React.FC = () => {
             {/* Previous Photo Button */}
             <button
               onClick={() => navigateModal(-1)}
-              className="absolute left-3 top-1/2 -translate-y-1/2 z-30 p-2.5 rounded-full bg-slate-950/90 text-slate-300 hover:text-amber-400 hover:bg-slate-800 border border-slate-700 transition-colors"
+              className="absolute left-2.5 top-1/2 -translate-y-1/2 z-30 p-2.5 rounded-full bg-slate-950/90 text-slate-200 hover:text-amber-400 hover:bg-slate-800 border border-slate-700 transition-colors shadow-lg cursor-pointer"
               aria-label="Foto anterior"
             >
               <ChevronLeft className="w-5 h-5" />
@@ -134,23 +141,23 @@ export const PhotoGallery: React.FC = () => {
             {/* Next Photo Button */}
             <button
               onClick={() => navigateModal(1)}
-              className="absolute right-3 top-1/2 -translate-y-1/2 z-30 p-2.5 rounded-full bg-slate-950/90 text-slate-300 hover:text-amber-400 hover:bg-slate-800 border border-slate-700 transition-colors md:right-[41%]"
+              className="absolute right-2.5 top-1/2 -translate-y-1/2 z-30 p-2.5 rounded-full bg-slate-950/90 text-slate-200 hover:text-amber-400 hover:bg-slate-800 border border-slate-700 transition-colors shadow-lg cursor-pointer md:right-[41%]"
               aria-label="Próxima foto"
             >
               <ChevronRight className="w-5 h-5" />
             </button>
 
-            {/* High-Res Image view */}
-            <div className="md:w-3/5 bg-black flex items-center justify-center min-h-[280px] sm:min-h-[440px] p-2">
+            {/* High-Res Image View */}
+            <div className="w-full md:w-3/5 bg-black/80 flex items-center justify-center p-4 min-h-[300px] sm:min-h-[420px]">
               <img
                 src={activeModalPhoto.url}
                 alt={activeModalPhoto.title}
-                className="max-h-[60vh] md:max-h-[75vh] w-auto max-w-full object-contain rounded-xl"
+                className="max-h-[55vh] md:max-h-[75vh] w-auto max-w-full object-contain rounded-xl shadow-md"
               />
             </div>
 
             {/* Details sidebar */}
-            <div className="md:w-2/5 p-6 sm:p-7 flex flex-col justify-between bg-slate-900 border-t md:border-t-0 md:border-l border-slate-800">
+            <div className="w-full md:w-2/5 p-5 sm:p-7 flex flex-col justify-between bg-slate-900 border-t md:border-t-0 md:border-l border-slate-800">
               <div>
                 <div className="flex items-center gap-1.5 text-xs text-amber-400 font-medium mb-2">
                   <MapPin className="w-3.5 h-3.5" />
@@ -166,9 +173,9 @@ export const PhotoGallery: React.FC = () => {
                 </p>
               </div>
 
-              <div className="pt-4 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-400 font-serif italic">
+              <div className="pt-4 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-400 font-serif italic mt-4">
                 <span>Memórias do SALS</span>
-                <span className="text-amber-400/90">Rumo a Betel</span>
+                <span className="text-amber-400/90">Nova Designação</span>
               </div>
             </div>
           </div>

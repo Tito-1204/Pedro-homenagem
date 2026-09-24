@@ -39,14 +39,19 @@ export const App: React.FC = () => {
         <SplashScreen onEnter={() => setSplashDone(true)} />
       )}
 
+      {/* Root site container: uses opacity transition (NO CSS transforms) so position:fixed works accurately on mobile */}
       <div
-        className={'min-h-screen bg-slate-950 text-slate-100 flex flex-col selection:bg-amber-500/30 selection:text-amber-200 overflow-x-hidden transition-all duration-1000 ease-out ' + (splashDone ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8 pointer-events-none')}
+        className={'min-h-screen bg-slate-950 text-slate-100 flex flex-col selection:bg-amber-500/30 selection:text-amber-200 overflow-x-hidden transition-opacity duration-1000 ease-out ' + (splashDone ? 'opacity-100' : 'opacity-0 pointer-events-none')}
       >
         <Navbar activeSection={activeSection} />
         <main className="flex-1">
-          {/* Unified container for Hero and EditorialLetter with BackgroundCarousel spanning both */}
-          <div className="relative overflow-hidden">
-            <BackgroundCarousel />
+          {/* Unified container for Hero and EditorialLetter */}
+          <div className="relative">
+            {/* Sticky viewport-sized carousel: stays perfectly proportioned on mobile without 5x zoom */}
+            <div className="sticky top-0 h-screen w-full -mb-[100vh] pointer-events-none overflow-hidden z-0">
+              <BackgroundCarousel />
+            </div>
+
             <div className="relative z-10">
               <Hero />
               <EditorialLetter />

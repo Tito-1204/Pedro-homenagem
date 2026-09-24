@@ -1,6 +1,5 @@
 import React from 'react';
 import { Heart, Sparkles, Building2, Wrench, ArrowUp } from 'lucide-react';
-import { triggerGoldenCelebration } from '../utils/confetti';
 
 export const Footer: React.FC = () => {
   const scrollToTop = () => {
@@ -29,7 +28,7 @@ export const Footer: React.FC = () => {
         </p>
 
         {/* Badges Journey */}
-        <div className="flex flex-wrap items-center justify-center gap-2.5 mb-8 text-xs font-semibold">
+        <div className="flex flex-wrap items-center justify-center gap-2.5 mb-10 text-xs font-semibold">
           <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-slate-900 border border-slate-700 text-slate-200">
             <Wrench className="w-3.5 h-3.5 text-amber-400" />
             Salão de Assembleias de Luanda Sul (SALS)
@@ -40,15 +39,6 @@ export const Footer: React.FC = () => {
             Nova Designação
           </span>
         </div>
-
-        {/* Celebration trigger */}
-        <button
-          onClick={triggerGoldenCelebration}
-          className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-bold text-xs sm:text-sm transition-all mb-10 active:scale-95 shadow-md"
-        >
-          <Sparkles className="w-4 h-4" />
-          <span>Celebrar Nova Etapa</span>
-        </button>
 
         {/* Bottom row with Feito de ❤️ por Tito Capewando */}
         <div className="w-full pt-8 border-t border-slate-900 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
